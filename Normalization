@@ -1,0 +1,25 @@
+import numpy as np
+
+# Original data with an outlier
+data = np.array([10, 20, 30, 40, 50, 1000])  # 1000 is an outlier
+
+# Min-Max Scaling function
+def min_max_scaling(data):
+    min_val = np.min(data)
+    max_val = np.max(data)
+    return (data - min_val) / (max_val - min_val)
+
+# Z-Score Standardization function
+def z_score_scaling(data):
+    mean = np.mean(data)
+    std_dev = np.std(data)
+    return (data - mean) / std_dev
+
+# Apply normalization techniques
+min_max_scaled_data = min_max_scaling(data)
+z_score_scaled_data = z_score_scaling(data)
+
+# Print results
+print("Original Data:", data)
+print("Min-Max Scaled Data:", min_max_scaled_data)
+print("Z-Score Standardized Data:", z_score_scaled_data)
