@@ -1,0 +1,60 @@
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.utils import pad_sequences
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.layers import Layer, Embedding, Dense, LayerNormalization, Dropout
+import numpy as np
+def load_data(file_path):
+  with open(file_path,'r') as f:
+    data=f.read()
+  return data
+file_path="hp_1.txt"
+text=load_data(file_path).lower()
+#tokenization
+from tensorflow.keras.preprocessing.text import Tokenizer
+tokenizer = Tokenizer(oov_token='<OOV>')
+tokenizer.fit_on_texts([text])
+print(tokenizer.word_index)
+total_words=len(tokenizer.word_index)+1
+input_sequences=[]
+tokens=tokenizer.texts_to_sequences([text])[0]
+seq_len=50
+for i in range(seq_len,len(tokens)):
+  input_sequences.append(tokens[i-seq_len:i+1])# Pad sequences and split inputs/targets
+# after this X will have inputs and y will have label for those inputs
+input_sequences = np.array(pad_sequences(input_sequences, maxlen=seq_len + 1, padding='pre'))
+X, y = input_sequences[:, :-1], input_sequences[:, -1]
+
+# One-hot encode the labels
+# note - there are other ways for encoding like pre-trained word2vec encoding and so on
+y = tf.keras.utils.to_categorical(y, num_classes=total_words) 
+import tensorflow as tf
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.utils import pad_sequences
+from tensorflow.keras.utils import to_categorical
+from tensorflow.keras.layers import Layer, Embedding, Dense, LayerNormalization, Dropout
+import numpy as np
+def load_data(file_path):
+  with open(file_path,'r') as f:
+    data=f.read()
+  return data
+file_path="hp_1.txt"
+text=load_data(file_path).lower()
+#tokenization
+from tensorflow.keras.preprocessing.text import Tokenizer
+tokenizer = Tokenizer(oov_token='<OOV>')
+tokenizer.fit_on_texts([text])
+print(tokenizer.word_index)
+total_words=len(tokenizer.word_index)+1
+input_sequences=[]
+tokens=tokenizer.texts_to_sequences([text])[0]
+seq_len=50
+for i in range(seq_len,len(tokens)):
+  input_sequences.append(tokens[i-seq_len:i+1])# Pad sequences and split inputs/targets
+# after this X will have inputs and y will have label for those inputs
+input_sequences = np.array(pad_sequences(input_sequences, maxlen=seq_len + 1, padding='pre'))
+X, y = input_sequences[:, :-1], input_sequences[:, -1]
+
+# One-hot encode the labels
+# note - there are other ways for encoding like pre-trained word2vec encoding and so on
+y = tf.keras.utils.to_categorical(y, num_classes=total_words) 
